@@ -1,12 +1,13 @@
 // Import styles of packages that you've installed.
 // All packages except `@mantine/hooks` require styles imports
-import "@mantine/core/styles.css";
-import { useRouter } from "next/router";
-import { useEffect } from "react";
-import type { AppProps } from "next/app";
-import { createTheme, MantineProvider } from "@mantine/core";
-import * as gtag from "../../lib/gtag";
-import Script from "next/script";
+import '@mantine/core/styles.css';
+import { useRouter } from 'next/router';
+import { useEffect } from 'react';
+import type { AppProps } from 'next/app';
+import { createTheme, MantineProvider } from '@mantine/core';
+import * as gtag from '@/lib/gtag';
+import Script from 'next/script';
+import '@/styles/globals.css';
 
 const theme = createTheme({
   /** Put your mantine theme override here */
@@ -18,9 +19,9 @@ export default function App({ Component, pageProps }: AppProps) {
     const handleRouterChange = (url: any) => {
       gtag.pageview(url);
     };
-    router.events.on("routeChangeComplete", handleRouterChange);
+    router.events.on('routeChangeComplete', handleRouterChange);
     return () => {
-      router.events.off("routeChangeComplete", handleRouterChange);
+      router.events.off('routeChangeComplete', handleRouterChange);
     };
   }, [router.events]);
   return (
