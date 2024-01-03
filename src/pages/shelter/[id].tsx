@@ -129,7 +129,7 @@ export default function shelter() {
         {shelter?.files &&
           JSON.parse(shelter?.files).map((file: string) => (
             <img
-              src={`https://huggingface.co/datasets/yasakoko/shelter?-web/resolve/main/${file}`}
+              src={`https://huggingface.co/datasets/yasakoko/shelter-web/resolve/main/${file}`}
               style={{ width: "300px", height: "300px" }}
               key={file}
             />
