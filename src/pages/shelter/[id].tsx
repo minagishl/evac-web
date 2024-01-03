@@ -2,7 +2,8 @@ import Header from "@/components/Header";
 import { Container, Text } from "@mantine/core";
 import { createClient } from "@supabase/supabase-js";
 import { useEffect, useState } from "react";
-export default function shelter() {
+
+export default function Shelter() {
   const [shelter, setshelter] = useState({} as any);
 
   useEffect(() => {
