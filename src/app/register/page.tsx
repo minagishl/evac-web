@@ -7,7 +7,6 @@ import { useEffect, useState } from 'react';
 import { createClient } from '@supabase/supabase-js';
 import Select from '@/components/select';
 import { useRouter } from 'next/navigation';
-import { nanoid } from 'nanoid';
 
 const footerContent: FooterContent[] = [
   {
@@ -92,22 +91,21 @@ export default function Page() {
     });
 
     const { error } = await supabase.from('shelters').insert({
-      Id: nanoid(),
-      ShelterName: shelterName,
-      RepresentativeName: representativeName,
-      ShelterType: shelterType,
-      Address: address,
-      PhoneNumber: phoneNumber,
-      ShelterPopulation0to15: shelterPopulation0to15,
-      ShelterPopulation16to59: shelterPopulation16to59,
-      ShelterPopulation60andAbove: shelterPopulation60andAbove,
-      Male: male,
-      Female: female,
-      ShelterSuppliesNotNeeded: shelterSuppliesNotNeeded,
-      ShelterSuppliesNeeded: shelterSuppliesNeeded,
-      Remarks: remarks,
-      Photo: null,
-      Emergency: false,
+      shelter_name: shelterName,
+      representative_name: representativeName,
+      shelter_type: shelterType,
+      address: address,
+      phone_number: phoneNumber,
+      population_age_0_15: shelterPopulation0to15,
+      population_age_16_59: shelterPopulation16to59,
+      population_age_60_above: shelterPopulation60andAbove,
+      male_population: male,
+      female_population: female,
+      supplies_not_needed: shelterSuppliesNotNeeded,
+      supplies_needed: shelterSuppliesNeeded,
+      remarks: remarks,
+      photo_url: null,
+      is_emergency: false,
     });
 
     if (error) {

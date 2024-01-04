@@ -7,7 +7,6 @@ import { useEffect, useState } from 'react';
 import { createClient } from '@supabase/supabase-js';
 import UseWindowSize from '@/hooks/useWindowSize';
 import Image from 'next/image';
-import { Members } from '@/app/types';
 
 const footerContent: FooterContent[] = [
   {
@@ -57,7 +56,7 @@ export default function Home() {
         {/* User Content */}
         <div className="scrollbar flex flex-1 flex-col overflow-scroll pb-2 md:flex-row">
           {shelters.map((shelter) => (
-            <Link key={shelter.Id} href={`/view/${shelter.Id}`}>
+            <Link key={shelter.id} href={`/view/${shelter.id}`}>
               <div className="h-full px-2 pt-6">
                 <div className="relative flex h-full overflow-hidden rounded-lg p-5 shadow-[rgba(17,_17,_26,_0.1)_0px_1px_7px] transition-opacity duration-200 ease-in-out hover:opacity-75 md:min-w-64 md:flex-col">
                   {width > 768 && (
@@ -65,17 +64,17 @@ export default function Home() {
                       <Image
                         height="100"
                         width="100"
-                        src={shelter.Photo === '[]' ? shelter.Photo : '/placeholder.svg'}
-                        alt={shelter.Id}
-                        className="absolute left-1/2 top-1/2 w-full -translate-x-1/2 -translate-y-1/2 transform"
+                        src={shelter.photo_url === '[]' ? shelter.photo_url : '/placeholder.svg'}
+                        alt={shelter.id}
+                        className="absolute left-1/2 top-1/2 w-full -translate-x-1/2 -translate-y-1/2"
                       />
                     </div>
                   )}
                   <div>
-                    <h2 className="text-lg font-semibold">{shelter.ShelterName}</h2>
+                    <h2 className="text-lg font-semibold">{shelter.shelter_name}</h2>
                     <div className="mt-1">
-                      <p className="text-sm font-semibold">{shelter.Address}</p>
-                      <p className="text-sm font-semibold">連絡先：{shelter.PhoneNumber}</p>
+                      <p className="text-sm font-semibold">{shelter.address}</p>
+                      <p className="text-sm font-semibold">連絡先：{shelter.phone_number}</p>
                     </div>
                   </div>
                   {width < 768 && (

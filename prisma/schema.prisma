@@ -1,0 +1,32 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model shelter {
+  id                      String   @id @default(uuid())
+  shelter_name            String
+  representative_name     String
+  shelter_type            String
+  address                 String
+  phone_number            String
+  population_age_0_15     Int
+  population_age_16_59    Int
+  population_age_60_above Int
+  male_population         Int
+  female_population       Int
+  supplies_not_needed     String
+  supplies_needed         String
+  remarks                 String?
+  photo_url               String?
+  is_emergency            Boolean
+  created_at              DateTime @default(now())
+  updated_at              DateTime @updatedAt
+}

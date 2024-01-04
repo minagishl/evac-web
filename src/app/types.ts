@@ -4,21 +4,24 @@ export type FooterContent = {
 };
 
 export type Shelter = {
-  Id: string;
-  ShelterName: string;
-  RepresentativeName: string;
-  ShelterType: string;
-  Address: string;
-  PhoneNumber: string;
-  ShelterPopulation0to15: number;
-  ShelterPopulation16to59: number;
-  ShelterPopulation60andAbove: number;
-  Male: number;
-  Female: number;
-  ShelterSuppliesNotNeeded: boolean;
-  ShelterSuppliesNeeded: boolean;
-  Remarks: string;
-  Photo: string;
+  id: string;
+  shelter_name: string;
+  representative_name: string;
+  shelter_type: string;
+  address: string;
+  phone_number: string;
+  population_age_0_15: number;
+  population_age_16_59: number;
+  population_age_60_above: number;
+  male_population: number;
+  female_population: number;
+  supplies_not_needed: string;
+  supplies_needed: string;
+  remarks: string | null;
+  photo_url: string;
+  is_emergency: boolean;
+  created_at: Date;
+  updated_at: Date;
 };
 
 export type Members = {
