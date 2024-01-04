@@ -13,7 +13,7 @@ async function main() {
   fs.createReadStream(csvPath)
     .pipe(csv())
     .on('data', async (row: any) => {
-      await prisma.shelter.create({
+      await prisma.shelters.create({
         data: {
           id: uuidv4(),
           shelter_name: row.shelter_name,

@@ -32,7 +32,7 @@ export default function Home() {
     supabase
       .from('shelters')
       .select('*')
-      .order('Id', { ascending: true })
+      .order('id', { ascending: true })
       .then(({ data, error }) => {
         if (error) {
           console.log(error);

@@ -10,7 +10,7 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model shelter {
+model shelters {
   id                      String   @id @default(uuid())
   shelter_name            String
   representative_name     String
