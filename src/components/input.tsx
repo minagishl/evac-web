@@ -18,7 +18,6 @@ interface FixtureProps extends TextareaProps {
   onFixtureChange: (member: Fixtures) => void;
 }
 
-import axios from 'axios';
 import { useEffect, useState } from 'react';
 import Select from './select';
 import { Fixtures, Members } from '@/app/types';
@@ -93,80 +92,21 @@ export function Textarea({ className, ...props }: TextareaProps) {
 }
 
 export function Address({ className, onAddressChange, ...props }: AddressProps) {
-  interface ApiResponse {
-    address1: string;
-    address2: string;
-    address3: string;
-  }
-
-  const [zipcode, setZipcode] = useState('');
   const [pref, setPref] = useState<string | null>(null);
   const [address, setAddress] = useState<string>('');
-  const [message, setMessage] = useState(null);
-  const [results, setResults] = useState<ApiResponse>({ address1: '', address2: '', address3: '' });
   const [houseNumber, setHouseNumber] = useState('');
   const [buildingName, setbuildingName] = useState('');
-  const [send, setSend] = useState(false);
-
-  const getAddress = async (): Promise<void> => {
-    if (zipcode === '') return;
-    const res = await axios.get('http://localhost:3000/api/search', {
-      params: { code: zipcode },
-    });
-
-    if (res.data.status === 200 && res.data.results !== null) {
-      setResults(res.data.results[0]);
-      setPref(results.address1);
-      setAddress(results.address2 + results.address3);
-      setMessage(res.data.message);
-      setSend(true);
-    } else if (res.data.results === null) {
-      setResults(res.data.results);
-      setSend(true);
-    } else {
-      setPref(null);
-      setAddress('');
-      setMessage(res.data.message);
-      setSend(true);
-    }
-  };
 
   useEffect(() => {
-    // console.log(results);
-    if (results === null || results === undefined) return;
     onAddressChange(
-      zipcode +
-        (results.address1 || '') +
-        (results.address2 || '') +
-        (results.address3 || '') +
-        houseNumber +
-        buildingName
+      `${pref ? pref : ''}${address ? address : ''}${houseNumber ? houseNumber : ''} ${
+        buildingName ? buildingName : ''
+      }`
     );
-  }, [zipcode, pref, address, houseNumber, buildingName, results, onAddressChange]);
+  }, [pref, address, houseNumber, buildingName, onAddressChange]);
 
   return (
     <>
-      <span className="pt-2 text-xs text-zinc-500">郵便番号</span>
-      <div className="flex flex-row">
-        <input
-          type="text"
-          className={`mt-2 h-10 flex-1 rounded-md border-2 border-zinc-800 bg-neutral-50 pl-2 placeholder:text-zinc-400 focus-visible:outline-none ${className}`}
-          {...props}
-          onChange={(e) => setZipcode(e.target.value)}
-          value={zipcode}
-        />
-        <button
-          className="ml-2 mt-2 h-10 rounded-md border-2 border-zinc-800 bg-zinc-800 px-2 text-sm font-semibold text-zinc-50"
-          onClick={getAddress}
-        >
-          検索する
-        </button>
-      </div>
-      {zipcode !== '' && send && results === null ? (
-        <span className="pt-2 text-xs text-red-600">正しい郵便番号を記入してください</span>
-      ) : (
-        ''
-      )}
       <span className="pt-3 text-xs text-zinc-500">都道府県</span>
       <Select
         required
@@ -238,7 +178,7 @@ export function Member({ className, onMemberChange, ...props }: MemberProps) {
       <Input required type="number" min="0" onChange={(e) => setMale(Number(e.target.value))} {...props} />
       <span className="pt-3 text-xs text-zinc-500">女性</span>
       <Input required type="number" min="0" onChange={(e) => setFemale(Number(e.target.value))} {...props} />
-      <span className="pt-3 text-xs text-zinc-600">該当する人がいない場合は0を記入してください</span>
+      <span className="pt-3 text-xs text-zinc-600">該当する人がいない場合は0または空白にしてください</span>
       {totalAge !== totalGender && (
         <span className="pt-2 text-xs text-red-600">年齢層の合計と性別の合計が一致しません。</span>
       )}

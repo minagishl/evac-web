@@ -5,14 +5,18 @@ interface SelectProps extends SelectHTMLAttributes<HTMLSelectElement> {
   className?: string;
   text?: string;
   options: string[];
+  onChange?: (event: React.ChangeEvent<HTMLSelectElement>) => void;
 }
 
-export default function Select({ className, text, options, ...props }: SelectProps) {
+export default function Select({ className, text, options, onChange, ...props }: SelectProps) {
   const [selected, setSelected] = useState('');
   const selectRef = useRef<HTMLSelectElement>(null);
 
   const handleChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
     setSelected(event.target.value);
+    if (onChange) {
+      onChange(event);
+    }
   };
 
   useEffect(() => {

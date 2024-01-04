@@ -7,6 +7,7 @@ import { useEffect, useState } from 'react';
 import { createClient } from '@supabase/supabase-js';
 import Select from '@/components/select';
 import { useRouter } from 'next/navigation';
+import { v4 as uuidv4 } from 'uuid';
 
 const footerContent: FooterContent[] = [
   {
@@ -33,6 +34,7 @@ export default function Page() {
   const [shelterPopulation60andAbove, setShelterPopulation60andAbove] = useState(0);
   const [male, setMale] = useState(0);
   const [female, setFemale] = useState(0);
+  const [memberMatch, setMemberMatch] = useState(false);
   const [shelterSuppliesNotNeeded, setShelterSuppliesNotNeeded] = useState('');
   const [shelterSuppliesNeeded, setShelterSuppliesNeeded] = useState('');
   const [remarks, setRemarks] = useState('');
@@ -64,12 +66,26 @@ export default function Page() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
+  const requiredFields = () => {
+    return (
+      shelterName &&
+      representativeName &&
+      shelterType &&
+      address &&
+      phoneNumber &&
+      memberMatch &&
+      shelterSuppliesNotNeeded &&
+      shelterSuppliesNeeded
+    );
+  };
+
   const handleMemberChange = (member: Members) => {
     setShelterPopulation0to15(member.ShelterPopulation0to15);
     setShelterPopulation16to59(member.ShelterPopulation16to59);
     setShelterPopulation60andAbove(member.ShelterPopulation60andAbove);
     setMale(member.ShelterPopulationMale);
     setFemale(member.ShelterPopulationFemale);
+    setMemberMatch(member.match);
   };
 
   const handleFixtureChange = (fixture: Fixtures) => {
@@ -79,6 +95,8 @@ export default function Page() {
 
   const handler = async () => {
     console.log('clicked');
+
+    if (requiredFields() === false) return;
 
     const supabase = createClient(
       process.env.NEXT_PUBLIC_SUPABASE_URL || '',
@@ -91,6 +109,7 @@ export default function Page() {
     });
 
     const { error } = await supabase.from('shelters').insert({
+      id: uuidv4(),
       shelter_name: shelterName,
       representative_name: representativeName,
       shelter_type: shelterType,
@@ -169,6 +188,10 @@ export default function Page() {
               required
               onChange={(e) => setPhoneNumber(e.currentTarget.value)}
             />
+            {/* 固定電話・携帯電話のMAX文字数を制限する*/}
+            {phoneNumber.length > 13 && (
+              <span className="pt-2 text-xs text-red-600">正しい電話番号を入力してください</span>
+            )}
           </div>
           <div className="flex flex-col">
             <div className="flex space-x-1">
@@ -190,8 +213,9 @@ export default function Page() {
           </div>
           <div className="flex flex-col">
             <button
-              className="mt-2 h-10 rounded-md border-2 border-zinc-800 bg-zinc-800 px-2 text-sm font-semibold text-zinc-50"
+              className="mt-2 h-10 rounded-md border-2 border-zinc-800 bg-zinc-800 px-2 text-sm font-semibold text-zinc-50 disabled:opacity-75"
               onClick={handler}
+              disabled={!requiredFields()}
             >
               この内容で登録する
             </button>

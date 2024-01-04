@@ -7,6 +7,7 @@ import { v4 as uuidv4 } from 'uuid';
 import path from 'path';
 
 const prisma = new PrismaClient();
+// Error(42501) - https://zenn.dev/masa5714/articles/e675de708fb381
 
 async function main() {
   const csvPath = path.join(__dirname, '../', 'supabase.csv');

@@ -1,12 +1,3 @@
-/*
-  Warnings:
-
-  - You are about to drop the `shelter` table. If the table is not empty, all the data it contains will be lost.
-
-*/
--- DropTable
-DROP TABLE "shelter";
-
 -- CreateTable
 CREATE TABLE "shelters" (
     "id" TEXT NOT NULL,
@@ -26,7 +17,7 @@ CREATE TABLE "shelters" (
     "photo_url" TEXT,
     "is_emergency" BOOLEAN NOT NULL,
     "created_at" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    "updated_at" TIMESTAMP(3) NOT NULL,
+    "updated_at" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
 
     CONSTRAINT "shelters_pkey" PRIMARY KEY ("id")
 );
