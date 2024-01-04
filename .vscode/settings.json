@@ -1,8 +1,7 @@
 {
-    "npm.packageManager": "yarn", // npm or yarn
-    "typescript.tsdk": "node_modules/typescript/lib",
-    "typescript.validate.enable": true, // enable/disable TypeScript validation
-    "typescript.format.enable": true,
-    "css.lint.unknownAtRules": "ignore",
-  }
-  
+  "npm.packageManager": "yarn", // npm or yarn
+  "typescript.tsdk": "node_modules/typescript/lib",
+  "typescript.validate.enable": true, // enable/disable TypeScript validation
+  "typescript.format.enable": true,
+  "css.lint.unknownAtRules": "ignore"
+}

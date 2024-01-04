@@ -1,0 +1,2 @@
+Id,ShelterName,RepresentativeName,ShelterType,Address,PhoneNumber,ShelterPopulation0to15,ShelterPopulation16to59,ShelterPopulation60andAbove,Male,Female,ShelterSuppliesNotNeeded,ShelterSuppliesNeeded,Remarks,Photo,Emergency
+iansinsid,小学校,田中太郎,避難所,東京都港区六本木1-1-1,03-1234-5678,10,20,30,40,50,食料,毛布,備考,,true
