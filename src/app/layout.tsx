@@ -15,7 +15,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
     <html lang="en">
       <head />
       <body
-        className={`bg-background flex max-h-screen min-h-screen flex-col bg-zinc-100 font-sans antialiased ${inter.className}`}
+        className={`flex max-h-screen min-h-screen flex-col bg-white font-sans antialiased ${inter.className}`}
       >
         <Header />
         {children}
