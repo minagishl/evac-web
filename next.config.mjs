@@ -22,7 +22,6 @@ const nextConfig = {
         utwm({
           classGenerator: {
             classPrefix: '',
-            newClassSize: 6,
           },
         })
       );
