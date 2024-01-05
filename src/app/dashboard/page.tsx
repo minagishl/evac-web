@@ -2,11 +2,12 @@
 
 import Link from 'next/link';
 import Arrow from '@/components/arrow';
-import { FooterContent, Shelter } from './types';
+import { FooterContent, Shelter } from '@/app/types';
 import { useEffect, useState } from 'react';
-import { createClient } from '@supabase/supabase-js';
+import supabase from '@/utils/supabase';
 import UseWindowSize from '@/hooks/useWindowSize';
 import Image from 'next/image';
+import { useRouter } from 'next/navigation';
 
 const footerContent: FooterContent[] = [
   {
@@ -23,12 +24,25 @@ export default function Home() {
   const [shelters, setShelters] = useState([] as Shelter[]);
   const { height, width } = UseWindowSize();
 
-  useEffect(() => {
-    const supabase = createClient(
-      process.env.NEXT_PUBLIC_SUPABASE_URL as string,
-      process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY as string
-    );
+  const router = useRouter();
 
+  useEffect(() => {
+    checkUser();
+
+    async function checkUser() {
+      const {
+        data: { user },
+      } = await supabase.auth.getUser();
+
+      console.log(user);
+
+      if (!user) {
+        router.push('/');
+      }
+    }
+  }, [router]);
+
+  useEffect(() => {
     supabase
       .from('shelters')
       .select('*')
@@ -49,7 +63,7 @@ export default function Home() {
 
   return (
     <main className="mx-auto flex w-full max-w-5xl flex-1 flex-col items-center justify-between overflow-scroll p-6 py-9 md:max-w-6xl lg:px-8">
-      <div className="scrollbar relative flex w-full flex-1 flex-col overflow-scroll rounded-3xl bg-neutral-100 p-6 sm:p-16">
+      <div className="scrollbar relative flex w-full flex-1 flex-col overflow-scroll rounded-3xl bg-zinc-50 p-6 shadow-inner sm:p-16">
         <h1 className="px-2 text-lg font-semibold">
           現在登録されている避難所（全{shelters.length.toLocaleString()}件）
         </h1>
